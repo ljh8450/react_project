@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './App.css';
 import { Routes, Route, Link } from 'react-router-dom'
 import axios from 'axios'
+import Detail from './components/Detail.js'
 // import Item from './js/Item';
 
 function App() {
@@ -66,7 +67,8 @@ function App() {
       </div>
       
       <Routes>
-        <Route path="/detail" element={ <div>상세페이지임</div> } />
+        <Route path="/" element={<div>인덱스임</div>} />
+        <Route path="/detail/:id" element={ <Detail /> } />
         <Route path="/about" element={ <div>어바웃페이지임</div> } />
       </Routes>
     </div>
