@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css';
+import { Routes, Route, Link } from 'react-router-dom'
+import axios from 'axios'
+// import Item from './js/Item';
 
 function App() {
+  let [shoes, setShoes] = useState([]);
+  let [divs, setDiv] = useState([]);
+
   return (
     <div>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -29,7 +35,40 @@ function App() {
             </div>
           </div>
         </div>
+        {/* <Item shoes={shoes[0]} i = {1}></Item> */}
       </nav>
+      
+      <button onClick={()=>{
+          axios.get('https://codingapple1.github.io/shop/data2.json').then((결과)=>{
+            let copy = [...shoes, ...결과.data]
+            setShoes(copy)
+            
+            let newDivs = [
+              <div key={divs.length + 1}>1</div>,
+              <div key={divs.length + 2}>2</div>,
+              <div key={divs.length + 3}>3</div>
+            ];
+            setDiv([...divs, ...newDivs]);
+          })
+          .catch(()=>{
+            console.log('실패함')
+          })
+        }}>버튼</button>
+      <div className='shoes-div'>
+        {shoes.map((d, i) => (
+          <div key={i} className='items'>
+            <p>{i}{d.title}</p>
+            <Link to={`/detail/${i+1}`}>
+              <img src={`/img/shoes${i+1}.jpg`}/>
+            </Link>
+          </div>
+        ))}
+      </div>
+      
+      <Routes>
+        <Route path="/detail" element={ <div>상세페이지임</div> } />
+        <Route path="/about" element={ <div>어바웃페이지임</div> } />
+      </Routes>
     </div>
   );
 }
